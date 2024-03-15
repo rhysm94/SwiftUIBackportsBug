@@ -1,2 +1,10 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+import CommonUI
+import SwiftUI
+import SwiftUIBackports
+
+public struct TestView: View {
+  public var body: some View {
+    Backport.LabeledContent("Hello", value: "World")
+      .backport.labeledContentStyle(.test)
+  }
+}

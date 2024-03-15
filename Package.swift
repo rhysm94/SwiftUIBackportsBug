@@ -4,20 +4,34 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftUIBackportsBug",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "SwiftUIBackportsBug",
-            targets: ["SwiftUIBackportsBug"]),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "SwiftUIBackportsBug"),
-        .testTarget(
-            name: "SwiftUIBackportsBugTests",
-            dependencies: ["SwiftUIBackportsBug"]),
-    ]
+  name: "SwiftUIBackportsBug",
+  platforms: [.iOS(.v15)],
+  products: [
+    .library(
+      name: "CommonUI",
+      targets: ["CommonUI"]
+    ),
+    .library(
+      name: "SwiftUIBackportsBug",
+      targets: ["SwiftUIBackportsBug"]
+    ),
+  ],
+  dependencies: [
+    .package(url: "https://github.com/shaps80/SwiftUIBackports", from: "2.8.0")
+  ],
+  targets: [
+    .target(
+      name: "CommonUI",
+      dependencies: [
+        .product(name: "SwiftUIBackports", package: "SwiftUIBackports")
+      ]
+    ),
+    .target(
+      name: "SwiftUIBackportsBug",
+      dependencies: [
+        "CommonUI",
+        .product(name: "SwiftUIBackports", package: "SwiftUIBackports")
+      ]
+    ),
+  ]
 )
